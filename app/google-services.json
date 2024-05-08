@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "730924183086",
+    "project_id": "vidang199-34022",
+    "storage_bucket": "vidang199-34022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:730924183086:android:8531af2ff61505516779bf",
+        "android_client_info": {
+          "package_name": "com.example.vidang199"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "730924183086-bq9e6k9k6602anesab9eaar3e1eoiqoa.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.vidang199",
+            "certificate_hash": "d2aa3e4836aa17f7edaf82de8952cf3c1fc0d9bb"
+          }
+        },
+        {
+          "client_id": "730924183086-eh9jrg4deutb53dq2q8v729934drn48q.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDLK2TL2bc5imsVePwNEJzhjxvCxA-q-1U"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "730924183086-eh9jrg4deutb53dq2q8v729934drn48q.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
