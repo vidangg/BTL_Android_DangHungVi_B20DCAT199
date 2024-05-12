@@ -21,12 +21,10 @@ import com.google.firebase.database.FirebaseDatabase;
 
 public class SigninActivity extends AppCompatActivity {
 
-
     FirebaseAuth myAuth;
     ActivitySigninBinding activitySigninBinding;
     SharedPreferences sharedPreferences;
     FirebaseDatabase firebaseDatabase;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,12 +40,10 @@ public class SigninActivity extends AppCompatActivity {
 
 //        sharedPreferences = getSharedPreferences("SavedToken",MODE_PRIVATE);
 
-
         myAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         activitySigninBinding.progressBar.setVisibility(View.GONE);
-
 
         activitySigninBinding.hidePassBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +55,6 @@ public class SigninActivity extends AppCompatActivity {
 
             }
         });
-
 
         activitySigninBinding.signinBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,12 +77,14 @@ public class SigninActivity extends AppCompatActivity {
 
                                         String id =  task.getResult().getUser().getUid();
 
+                                        // khoi tao doi tuong de luu token
+                                        sharedPreferences = getSharedPreferences("SavedToken",MODE_PRIVATE);
 
-                                            sharedPreferences = getSharedPreferences("SavedToken",MODE_PRIVATE);
-                                            String tokenInMain =  sharedPreferences.getString("ntoken","mynull");
-                                            firebaseDatabase.getReference("Users").child(id).child("token").setValue(tokenInMain);
+                                        // lay token da~ luu tu` sharedPreferences
+                                        String tokenInMain =  sharedPreferences.getString("ntoken","mynull");
 
-
+                                        // luu token vao csdl firebase danh` cho nguoi dung da~ dang nhap
+                                        firebaseDatabase.getReference("Users").child(id).child("token").setValue(tokenInMain);
 
 
                                         Intent intent = new Intent(SigninActivity.this, MainActivity.class);
@@ -99,7 +96,8 @@ public class SigninActivity extends AppCompatActivity {
                                     }
                                 }
                             });
-                }else {
+                }
+                else {
                     activitySigninBinding.progressBar.setVisibility(View.GONE);
                     Toast.makeText(SigninActivity.this, "Enter details", Toast.LENGTH_SHORT).show();
                 }

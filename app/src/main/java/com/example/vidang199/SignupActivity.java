@@ -69,6 +69,7 @@ public class SignupActivity extends AppCompatActivity {
 
         activitySignupBinding.progressBar.setVisibility(View.GONE);
 
+        // cau hinh de dang nhap voi google
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
@@ -111,22 +112,18 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-
-        //      Signin with google
-
+        //Signin with google
         activitySignupBinding.googleSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//                signInWithGoogle();
+//              signInWithGoogle();
                 activitySignupBinding.progressBar.setVisibility(View.VISIBLE);
-
-                        Intent signInIntent  = mGoogleSignInClient.getSignInIntent();
-                        activityResultLauncher.launch(signInIntent);
+                Intent signInIntent  = mGoogleSignInClient.getSignInIntent();
+                activityResultLauncher.launch(signInIntent);
 
             }
         });
-
 
         activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
             @Override
@@ -134,23 +131,22 @@ public class SignupActivity extends AppCompatActivity {
 
                     Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                     try {
-                        // Google Sign In was successful, authenticate with Firebase
+                        // Lấy thông tin tài khoản Google từ kết quả đã trả về
                         GoogleSignInAccount account = task.getResult(ApiException.class);
                         firebaseAuthWithGoogle(account.getIdToken());
 
                     } catch (ApiException e) {
-                        // Google Sign In failed, update UI appropriately
                         Toast.makeText(SignupActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
 
-                activitySignupBinding.progressBar.setVisibility(View.GONE);
+                    activitySignupBinding.progressBar.setVisibility(View.GONE);
             }
         });
 
     }
 
 
-
+    // Xac thuc voi google
     public void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         myAuth.signInWithCredential(credential)
@@ -161,8 +157,6 @@ public class SignupActivity extends AppCompatActivity {
 
                             String id =  task.getResult().getUser().getUid();
 
-
-                            // To not override default user values in DB when signing again with google
                             firebaseDatabase.getReference().child("Users").child(id).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                                 @Override
                                 public void onSuccess(DataSnapshot dataSnapshot) {
@@ -186,7 +180,8 @@ public class SignupActivity extends AppCompatActivity {
                                         firebaseDatabase.getReference().child("Users").child(id).setValue(userModel);
 
 
-                                    }else{
+                                    }
+                                    else{
 
                                         sharedPreferences = getSharedPreferences("SavedToken",MODE_PRIVATE);
                                         String tokenInMain =  sharedPreferences.getString("ntoken","mynull");
@@ -202,7 +197,8 @@ public class SignupActivity extends AppCompatActivity {
 
 //                            }
 
-                        } else {
+                        }
+                        else {
                             Toast.makeText(SignupActivity.this, task.getException().getLocalizedMessage()+"", Toast.LENGTH_SHORT).show();
                             Log.d("TAG2", "signInWithCredential: failure", task.getException());
                             activitySignupBinding.progressBar.setVisibility(View.GONE);
@@ -212,11 +208,10 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-
+    // dang ky nguoi dung
     private void signupUser(String email, String password, String userName, String about){
 
         activitySignupBinding.progressBar.setVisibility(View.VISIBLE);
-
 
         myAuth.createUserWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
