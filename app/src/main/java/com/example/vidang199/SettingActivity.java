@@ -62,7 +62,6 @@ public class SettingActivity extends AppCompatActivity {
                                 .addToBackStack(null)
                                 .commit();
 
-
             }
         });
 
@@ -70,16 +69,13 @@ public class SettingActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                firebaseDatabase.getReference("Users").child(myAuth.getUid())
-                        .child("token").setValue("");
+                firebaseDatabase.getReference("Users").child(myAuth.getUid()).child("token").setValue("");
                 myAuth.signOut();
                 Intent intent = new Intent(SettingActivity.this, SignupActivity.class);
                 startActivity(intent);
 
             }
         });
-
-
 
     }
 
@@ -95,6 +91,5 @@ public class SettingActivity extends AppCompatActivity {
         else
             super.onBackPressed();
 
-//
     }
 }

@@ -39,7 +39,6 @@ public class ProfileFragment extends Fragment {
    FirebaseStorage firebaseStorage;
 
     public ProfileFragment() {
-        // Required empty public constructor
     }
 
     @Override
@@ -89,8 +88,6 @@ public class ProfileFragment extends Fragment {
                             }
                         });
 
-
-
                     }
                 });
 
@@ -124,8 +121,6 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-        
-
 
 
         binding.newPic.setOnClickListener(new View.OnClickListener() {
@@ -136,75 +131,68 @@ public class ProfileFragment extends Fragment {
                          .setAspectRatio(3,3)
                          .setGuidelines(CropImageView.Guidelines.ON)
                          .setFixAspectRatio(true).setOutputCompressQuality(60)
-                        .start(getContext(),ProfileFragment.this);
-
+                         .start(getContext(),ProfileFragment.this);
 
             }
         });
 
+        firebaseDatabase.getReference("Users").child(uid).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String uName = snapshot.child("userName").getValue().toString();
+                String uMail = snapshot.child("userMail").getValue().toString();
+                String uPic = snapshot.child("profilePic").getValue().toString();
+                String uAbout = snapshot.child("about").getValue().toString();
+
+                Picasso.get().load(uPic).error(R.drawable.user)
+                        .placeholder(R.drawable.user).centerCrop().fit()
+                        .into(binding.profilePicImageview);
+
+                binding.username.setText(uName);
+                binding.usermail.setText(uMail);
+                binding.about.setText(uAbout);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        return binding.getRoot();
+    }
 
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            if (resultCode == RESULT_OK) {
+                Uri resultUri = result.getUri();
 
-                firebaseDatabase.getReference("Users").child(uid).addValueEventListener(new ValueEventListener() {
+                Picasso.get().load(resultUri).fit().centerCrop().into(binding.profilePicImageview);
+
+                final StorageReference storageRef = firebaseStorage.getReference().child("Profile pictures").child(firebaseAuth.getUid());
+                storageRef.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                     @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
-                        String uName = snapshot.child("userName").getValue().toString();
-                        String uMail = snapshot.child("userMail").getValue().toString();
-                        String uPic = snapshot.child("profilePic").getValue().toString();
-                        String uAbout = snapshot.child("about").getValue().toString();
+                        storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                firebaseDatabase.getReference("Users").child(firebaseAuth.getUid()).child("profilePic").setValue(uri.toString());
 
-                        Picasso.get().load(uPic).error(R.drawable.user)
-                                .placeholder(R.drawable.user).centerCrop().fit()
-                                .into(binding.profilePicImageview);
-
-                        binding.username.setText(uName);
-                        binding.usermail.setText(uMail);
-                        binding.about.setText(uAbout);
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                            }
+                        });
 
                     }
                 });
 
 
-                return binding.getRoot();
             }
-
-
-
-        @Override
-         public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-            super.onActivityResult(requestCode, resultCode, data);
-            if (requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE) {
-                CropImage.ActivityResult result = CropImage.getActivityResult(data);
-                if (resultCode == RESULT_OK) {
-                    Uri resultUri = result.getUri();
-
-
-                    Picasso.get().load(resultUri).fit().centerCrop().into(binding.profilePicImageview);
-
-                    final StorageReference storageRef = firebaseStorage.getReference().child("Profile pictures").child(firebaseAuth.getUid());
-                    storageRef.putFile(resultUri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-
-                            storageRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-                                    firebaseDatabase.getReference("Users").child(firebaseAuth.getUid()).child("profilePic").setValue(uri.toString());
-
-                                }
-                            });
-
-                        }
-                    });
-
-
-                }
-            }
-
         }
+
+    }
 }

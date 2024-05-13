@@ -6,15 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".SettingActivity"
-    android:id="@+id/setting_container"
-    >
+    android:id="@+id/setting_container">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/my_toolbar"
-        android:background="?attr/colorPrimary"
-        >
+        android:background="?attr/colorPrimary">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -33,9 +31,7 @@
             android:layout_gravity="center_horizontal"
             />
 
-
     </androidx.appcompat.widget.Toolbar>
-
 
     <TextView
         android:layout_width="match_parent"
@@ -47,17 +43,6 @@
         android:layout_margin="10dp"
 
         />
-
-<!--<androidx.appcompat.widget.SwitchCompat-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:id="@+id/toggle_darkmode"-->
-<!--    android:textSize="24sp"-->
-<!--    android:padding="10dp"-->
-<!--    android:layout_margin="10dp"-->
-<!--    />-->
-
-
 
     <TextView
         android:layout_width="match_parent"
