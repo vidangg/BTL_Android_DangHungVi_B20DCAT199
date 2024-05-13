@@ -55,7 +55,7 @@
             android:padding="10dp"
             android:singleLine="true" />
 
-    <EditText
+        <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/password"
@@ -110,15 +110,6 @@
 
         />
 </LinearLayout>
-
-<!--    <Button-->
-<!--        android:id="@+id/move_to_signin"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/btn_container"-->
-<!--        android:layout_centerHorizontal="true"-->
-<!--        android:background="?android:attr/selectableItemBackground"-->
-<!--        android:text="Already have account? Sign-in." />-->
 
     <com.google.android.material.button.MaterialButton
         style="@style/Widget.AppCompat.Button.Borderless"

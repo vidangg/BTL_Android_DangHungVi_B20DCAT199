@@ -89,7 +89,7 @@ public class SignupActivity extends AppCompatActivity {
                 if(!email.isEmpty() && !password.isEmpty() && !userName.isEmpty())
                     signupUser(email,password, userName,about);
                 else
-                    Toast.makeText(SignupActivity.this, "Enter details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SignupActivity.this, "Nhap day du thong tin!", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -99,7 +99,7 @@ public class SignupActivity extends AppCompatActivity {
 
                 if(activitySignupBinding.password.getTransformationMethod()!=null)
                     activitySignupBinding.password.setTransformationMethod(null);
-                else activitySignupBinding.password.setTransformationMethod(new PasswordTransformationMethod());
+                else activitySignupBinding.password.setTransformationMethod(new PasswordTransformationMethod()); // an mat khau
 
             }
         });
@@ -112,7 +112,7 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        //Signin with google
+        //Dang nhap voi Google
         activitySignupBinding.googleSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,12 +145,9 @@ public class SignupActivity extends AppCompatActivity {
 
     }
 
-
-    // Xac thuc voi google
     public void firebaseAuthWithGoogle(String idToken) {
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
-        myAuth.signInWithCredential(credential)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        myAuth.signInWithCredential(credential).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
@@ -179,7 +176,6 @@ public class SignupActivity extends AppCompatActivity {
 
                                         firebaseDatabase.getReference().child("Users").child(id).setValue(userModel);
 
-
                                     }
                                     else{
 
@@ -194,8 +190,6 @@ public class SignupActivity extends AppCompatActivity {
                             activitySignupBinding.progressBar.setVisibility(View.GONE);
                             Intent intent = new Intent(SignupActivity.this,MainActivity.class);
                             startActivity(intent);
-
-//                            }
 
                         }
                         else {
@@ -213,8 +207,7 @@ public class SignupActivity extends AppCompatActivity {
 
         activitySignupBinding.progressBar.setVisibility(View.VISIBLE);
 
-        myAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+        myAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         activitySignupBinding.progressBar.setVisibility(View.GONE);
@@ -233,7 +226,8 @@ public class SignupActivity extends AppCompatActivity {
                            Intent intent = new Intent(SignupActivity.this,MainActivity.class);
                            startActivity(intent);
 
-                        } else {
+                        }
+                        else {
                             Toast.makeText(SignupActivity.this, "SignUp failed "+task.getException().getLocalizedMessage(),
                                     Toast.LENGTH_SHORT).show();
                         }

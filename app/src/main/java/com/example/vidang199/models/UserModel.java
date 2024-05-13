@@ -15,7 +15,7 @@ public class UserModel {
     }
 
 
-    // For storing in DB
+    // Lưu  lên db
     public UserModel(String userName, String userMail, String userPassword, String profilePic, String about){
 
         this.profilePic = profilePic;
@@ -31,7 +31,7 @@ public class UserModel {
     public UserModel() {
     }
 
-    // for displaying in chats list and search list
+    // hien thi trong danh sach chat va danh sach tim kiem
     public UserModel(String userName, String userMail, String profilePic) {
         this.userName = userName;
         this.userMail = userMail;
