@@ -30,7 +30,6 @@
         android:layout_below="@+id/contactlist_toolbar"
         android:layout_margin="10dp">
 
-
         <androidx.cardview.widget.CardView
             android:id="@+id/parent_image_view"
             android:layout_width="50dp"

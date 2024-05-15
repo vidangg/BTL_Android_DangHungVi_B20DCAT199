@@ -30,9 +30,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
-
 public class MainActivity extends AppCompatActivity {
-
 
     FirebaseAuth myAuth;
     ActivityMainBinding activityMainBinding;
@@ -60,14 +58,12 @@ public class MainActivity extends AppCompatActivity {
         myToolbar = activityMainBinding.myToolbar;
         myToolbar.inflateMenu(R.menu.main_menu);
 
-
-
         setContentView(activityMainBinding.getRoot());
 
         activityMainBinding.tutorial.setVisibility(View.GONE);
 
         if(!isOnline()){
-            Toast.makeText(MainActivity.this, "Check Internet Connection", Toast.LENGTH_LONG).show();
+            Toast.makeText(MainActivity.this, "Kiểm tra kết nối Internet!", Toast.LENGTH_LONG).show();
         }
 
         myToolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -126,11 +122,11 @@ public class MainActivity extends AppCompatActivity {
 
                         if(contactIds.isEmpty()){
                             activityMainBinding.tutorial.setVisibility(View.VISIBLE);
-                        }else{
+                        }
+                        else{
                             activityMainBinding.tutorial.setVisibility(View.GONE);
 
                         }
-
 
                         for(int i=0;i<contactIds.size();i++) {
 
@@ -139,9 +135,15 @@ public class MainActivity extends AppCompatActivity {
                             String recentmsg = "";
 
                             try{
-                                if(!recentMsgTimes.isEmpty()){time = recentMsgTimes.get(i);}
-                                if(!recentMsg.isEmpty()){recentmsg = recentMsg.get(i);}
-                            }catch (IndexOutOfBoundsException err){
+                                if(!recentMsgTimes.isEmpty()){
+                                    time = recentMsgTimes.get(i);
+                                }
+
+                                if(!recentMsg.isEmpty()){
+                                    recentmsg = recentMsg.get(i);
+                                }
+                            }
+                            catch (IndexOutOfBoundsException err){
 
                             }
 
@@ -170,19 +172,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-//        Drawable drawable =  ContextCompat.getDrawable(MainActivity.this,R.drawable.divider);
         DividerItemDecoration decoration = new DividerItemDecoration(activityMainBinding.chatsRecyclerview.getContext(), DividerItemDecoration.VERTICAL);
         activityMainBinding.chatsRecyclerview.addItemDecoration(decoration);
         activityMainBinding.chatsRecyclerview.setLayoutManager(new LinearLayoutManager(MainActivity.this));
 
-
         activityMainBinding.chatsRecyclerview.setAdapter(c);
-
 
         c.setOnItemClickListener(new chatPageAdapter.OnClickListener() {
             @Override
             public void onItemClick(UserModel userdata) {
-
 
                 Intent intent = new Intent(MainActivity.this, MessagingActivity.class);
                 intent.putExtra("USERNAME", userdata.getUserName());
@@ -191,10 +189,8 @@ public class MainActivity extends AppCompatActivity {
                 intent.putExtra("TOKEN", userdata.getToken());
                 startActivity(intent);
 
-
             }
         });
-
 
     }
 

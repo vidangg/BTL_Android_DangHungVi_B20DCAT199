@@ -34,7 +34,6 @@ public class MessagingActivity extends AppCompatActivity {
     String senderId;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -88,8 +87,7 @@ public class MessagingActivity extends AppCompatActivity {
         activityMessagingBinding.msgRecyclerview.setLayoutManager(new LinearLayoutManager(this));
 
 
-        firebaseDatabase.getReference("Users")
-                .child(senderId).addValueEventListener(new ValueEventListener() {
+        firebaseDatabase.getReference("Users").child(senderId).addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot){
 
@@ -97,7 +95,6 @@ public class MessagingActivity extends AppCompatActivity {
                 msgData.clear();
 
                 for (DataSnapshot e : dataSnapshot.child("Contacts").child(receiverId).child("Chats").getChildren()){
-
 
                     String msg = e.child("msgText").getValue().toString();
 
@@ -200,7 +197,7 @@ public class MessagingActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             if((msgAdapter.getItemCount()-1)>1)
-                            activityMessagingBinding.msgRecyclerview.smoothScrollToPosition(msgAdapter.getItemCount()-1);
+                                activityMessagingBinding.msgRecyclerview.smoothScrollToPosition(msgAdapter.getItemCount()-1);
                         }
                     }, 10);
                 }

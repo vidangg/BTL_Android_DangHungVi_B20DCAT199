@@ -70,7 +70,7 @@ public class ProfileFragment extends Fragment {
                 binding.editFragContainer.bringToFront();
                 binding.uid.setVisibility(View.GONE);
 
-                binding.text.setText("Enter new name");
+                binding.text.setText("Nhập tên mới");
 
                 binding.edittext.requestFocus();
                 binding.saveEditBtn.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +82,7 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void onSuccess(Void unused) {
 
-                                Toast.makeText(getContext(), "Username editted ", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getContext(), "Tên đã được sửa! ", Toast.LENGTH_SHORT).show();
                                 binding.edittext.setText("");
                                 binding.editFragContainer.setVisibility(View.GONE);
                             }
@@ -103,7 +103,7 @@ public class ProfileFragment extends Fragment {
                 binding.uid.setVisibility(View.GONE);
 
 
-                binding.text.setText("Enter about");
+                binding.text.setText("Nhập thông tin!");
                 binding.edittext.setHint("about");
 
                 binding.edittext.requestFocus();

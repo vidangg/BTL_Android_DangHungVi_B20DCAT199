@@ -92,14 +92,14 @@ public class SigninActivity extends AppCompatActivity {
 
                                     } else {
                                         activitySigninBinding.progressBar.setVisibility(View.GONE);
-                                        Toast.makeText(SigninActivity.this, "Try again - " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(SigninActivity.this, "Hãy thử lại! - " + task.getException().getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             });
                 }
                 else {
                     activitySigninBinding.progressBar.setVisibility(View.GONE);
-                    Toast.makeText(SigninActivity.this, "Enter details", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(SigninActivity.this, "Nhập thông tin!", Toast.LENGTH_SHORT).show();
                 }
 
             }
