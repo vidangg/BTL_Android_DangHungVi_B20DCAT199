@@ -5,8 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MessagingActivity"
-    android:id="@+id/parent_viewgroup"
-    >
+    android:id="@+id/parent_viewgroup">
 
     <androidx.appcompat.widget.Toolbar
         android:layout_width="match_parent"
@@ -37,8 +36,8 @@
             android:layout_margin="5dp"
             android:layout_toRightOf="@+id/back_btn"
             android:id="@+id/parent_image_view"
-            app:cardCornerRadius="22dp"
-            >
+            app:cardCornerRadius="22dp">
+
             <ImageView
                 android:layout_height="44dp"
                 android:layout_width="wrap_content"
@@ -96,8 +95,6 @@
 
     </androidx.cardview.widget.CardView>
 
-    <!--            android:backgroundTint="@color/black"-->
-
 
     <androidx.cardview.widget.CardView
         android:layout_width="44dp"
@@ -106,8 +103,8 @@
         app:cardCornerRadius="22dp"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:id="@+id/send_btn_parent"
-        >
+        android:id="@+id/send_btn_parent">
+
         <ImageView
             android:layout_height="44dp"
             android:layout_width="44dp"

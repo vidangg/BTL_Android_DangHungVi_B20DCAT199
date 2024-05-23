@@ -68,22 +68,20 @@ public class messageAdapter extends RecyclerView.Adapter {
             long time = msgData.get(position).getMsgTime();
             final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(time);
-            final String timeString =
-                    new SimpleDateFormat("HH:mm").format(cal.getTime());
+            final String timeString = new SimpleDateFormat("HH:mm").format(cal.getTime());
 
             ((OutgoingViewholder) holder).outgoingMsgTime.setText(timeString);
-        } else {
-
+        }
+        else {
             ((IncomingViewholder) holder).incomingMsg.setText(msgData.get(position).getMsgText());
+
             long time = msgData.get(position).getMsgTime();
             final Calendar cal = Calendar.getInstance();
             cal.setTimeInMillis(time);
-            final String timeString =
-                    new SimpleDateFormat("HH:mm").format(cal.getTime());
+            final String timeString = new SimpleDateFormat("HH:mm").format(cal.getTime());
 
             ((IncomingViewholder) holder).incomingMsgTime.setText(timeString);
         }
-
 
     }
 
@@ -96,7 +94,6 @@ public class messageAdapter extends RecyclerView.Adapter {
 
         TextView outgoingMsg, outgoingMsgTime;
 
-
         public OutgoingViewholder(@NonNull View itemView) {
             super(itemView);
 
@@ -106,7 +103,6 @@ public class messageAdapter extends RecyclerView.Adapter {
     }
 
     public class IncomingViewholder extends RecyclerView.ViewHolder {
-
         TextView incomingMsg, incomingMsgTime;
 
         public IncomingViewholder(@NonNull View itemView) {

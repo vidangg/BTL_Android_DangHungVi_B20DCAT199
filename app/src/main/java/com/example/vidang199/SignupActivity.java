@@ -51,6 +51,7 @@ public class SignupActivity extends AppCompatActivity {
         myAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
+        //
         if(myAuth.getCurrentUser()!=null){
             Intent intent = new Intent(SignupActivity.this,MainActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
@@ -99,7 +100,8 @@ public class SignupActivity extends AppCompatActivity {
 
                 if(activitySignupBinding.password.getTransformationMethod()!=null)
                     activitySignupBinding.password.setTransformationMethod(null);
-                else activitySignupBinding.password.setTransformationMethod(new PasswordTransformationMethod()); // an mat khau
+                else
+                    activitySignupBinding.password.setTransformationMethod(new PasswordTransformationMethod()); // an mat khau
 
             }
         });
@@ -112,12 +114,11 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        //Dang nhap voi Google
+
         activitySignupBinding.googleSignin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-//              signInWithGoogle();
                 activitySignupBinding.progressBar.setVisibility(View.VISIBLE);
                 Intent signInIntent  = mGoogleSignInClient.getSignInIntent();
                 activityResultLauncher.launch(signInIntent);
@@ -125,18 +126,18 @@ public class SignupActivity extends AppCompatActivity {
             }
         });
 
-        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+        activityResultLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
             @Override
             public void onActivityResult(ActivityResult result) {
 
                     Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(result.getData());
                     try {
-                        // Lấy thông tin tài khoản Google từ kết quả đã trả về
                         GoogleSignInAccount account = task.getResult(ApiException.class);
                         firebaseAuthWithGoogle(account.getIdToken());
 
                     } catch (ApiException e) {
-                        Toast.makeText(SignupActivity.this, e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(SignupActivity.this, "Lỗi: " + e.getLocalizedMessage(), Toast.LENGTH_SHORT).show();
                     }
 
                     activitySignupBinding.progressBar.setVisibility(View.GONE);
@@ -154,7 +155,8 @@ public class SignupActivity extends AppCompatActivity {
 
                             String id =  task.getResult().getUser().getUid();
 
-                            firebaseDatabase.getReference().child("Users").child(id).get().addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
+                            firebaseDatabase.getReference().child("Users").child(id).get().
+                                    addOnSuccessListener(new OnSuccessListener<DataSnapshot>() {
                                 @Override
                                 public void onSuccess(DataSnapshot dataSnapshot) {
 
@@ -202,7 +204,7 @@ public class SignupActivity extends AppCompatActivity {
     }
 
 
-    // dang ky nguoi dung
+
     private void signupUser(String email, String password, String userName, String about){
 
         activitySignupBinding.progressBar.setVisibility(View.VISIBLE);

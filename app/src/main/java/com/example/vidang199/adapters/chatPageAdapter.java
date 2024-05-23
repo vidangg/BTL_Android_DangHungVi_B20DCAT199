@@ -51,14 +51,12 @@ public class chatPageAdapter extends RecyclerView.Adapter<chatPageAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-
         userData.sort(Comparator.comparing(UserModel::getRecentMsgTime).reversed());
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
 
-        // Show date/time on contact list
         final Calendar cal = Calendar.getInstance();
         cal.setTimeInMillis(userData.get(position).getRecentMsgTime());
         final String timeString1 =

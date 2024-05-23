@@ -57,68 +57,68 @@ public class ContactListsActivity extends AppCompatActivity {
                 activityContactListsBinding.searchView.clearFocus();
                 searchedUser.clear();
 
-              firebaseDatabase.getReference("Users").addValueEventListener(new ValueEventListener() {
-                  @Override
-                  public void onDataChange(@NonNull DataSnapshot snapshot) {
+                firebaseDatabase.getReference("Users").addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
 
-                      boolean flag = false;
+                        boolean flag = false;
 
-                      for(DataSnapshot e : snapshot.getChildren()){
+                        for(DataSnapshot e : snapshot.getChildren()){
 
-                          flag = e.getKey().equals(firebaseAuth.getCurrentUser().getUid());
+                            flag = e.getKey().equals(firebaseAuth.getCurrentUser().getUid());
 
-                          if(!flag && e.child("userMail").getValue().equals(query.trim()) ) {
+                            if(!flag && e.child("userMail").getValue().equals(query.trim()) ) {
 
-                              Log.d("testcontact"," "+query+"  name= "+e.child("userName").getValue().toString());
-                              UserModel userModel = new UserModel();
-                              userModel.setUserName(e.child("userName").getValue().toString());
+                                Log.d("testcontact"," "+query+"  name= "+e.child("userName").getValue().toString());
+                                UserModel userModel = new UserModel();
+                                userModel.setUserName(e.child("userName").getValue().toString());
 
-                              userModel.setUserId(e.getKey());
-                              searchedUser.add(userModel);
+                                userModel.setUserId(e.getKey());
+                                searchedUser.add(userModel);
 
-                              activityContactListsBinding.userName.setText(e.child("userName").getValue().toString());
-                              activityContactListsBinding.usermail.setText(e.child("userMail").getValue().toString());
-                              String pic = e.child("profilePic").getValue().toString();
-                              Picasso.get().load(pic)
-                                      .fit()
-                                      .centerCrop()
-                                      .error(R.drawable.user)
-                                      .placeholder(R.drawable.user)
-                                      .into(activityContactListsBinding.profilePicImageview);
+                                activityContactListsBinding.userName.setText(e.child("userName").getValue().toString());
+                                activityContactListsBinding.usermail.setText(e.child("userMail").getValue().toString());
+                                String pic = e.child("profilePic").getValue().toString();
+                                Picasso.get().
+                                        load(pic).
+                                        fit().
+                                        centerCrop().
+                                        error(R.drawable.user).
+                                        placeholder(R.drawable.user).
+                                        into(activityContactListsBinding.profilePicImageview);
 
-                              activityContactListsBinding.newUserDisplay.setVisibility(View.VISIBLE);
+                                activityContactListsBinding.newUserDisplay.setVisibility(View.VISIBLE);
 
-                              activityContactListsBinding.addContactBtn.setOnClickListener(new View.OnClickListener() {
-                                  @Override
-                                  public void onClick(View v) {
+                                activityContactListsBinding.addContactBtn.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
 
-                                      Toast.makeText(ContactListsActivity.this, "Liên hệ đã được thêm!", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(ContactListsActivity.this, "Liên hệ đã được thêm!", Toast.LENGTH_SHORT).show();
 
-                                      String userId = searchedUser.get(0).getUserId();
+                                        String userId = searchedUser.get(0).getUserId();
 
-                                      firebaseDatabase.getReference("Users").child(firebaseAuth.getCurrentUser().getUid())
-                                              .child("Contacts").child(userId).setValue("Chats");
-                                      searchedUser.clear();
+                                        firebaseDatabase.getReference("Users").child(firebaseAuth.getCurrentUser().getUid())
+                                                .child("Contacts").child(userId).setValue("Chats");
+                                        searchedUser.clear();
 
-                                      firebaseDatabase.getReference("Users").child(firebaseAuth.getUid()).child("Contacts").child(userId)
-                                              .child("interactionTime").setValue(new Date().getTime());
-                                      firebaseDatabase.getReference("Users").child(firebaseAuth.getUid()).child("Contacts").child(userId)
-                                              .child("recentMessage").setValue("");
+                                        firebaseDatabase.getReference("Users").child(firebaseAuth.getUid()).child("Contacts").child(userId)
+                                                .child("interactionTime").setValue(new Date().getTime());
+                                        firebaseDatabase.getReference("Users").child(firebaseAuth.getUid()).child("Contacts").child(userId)
+                                                .child("recentMessage").setValue("");
 
-
-                                  }
+                                    }
                               });
 
-                          }
-                      }
+                            }
+                        }
 
-                  }
+                    }
 
-                  @Override
-                  public void onCancelled(@NonNull DatabaseError error) {
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
                       searchedUser.clear();
                   }
-              });
+                });
 
                 return false;
             }
@@ -130,10 +130,6 @@ public class ContactListsActivity extends AppCompatActivity {
         });
 
 
-
-
-
     }
-
 
 }

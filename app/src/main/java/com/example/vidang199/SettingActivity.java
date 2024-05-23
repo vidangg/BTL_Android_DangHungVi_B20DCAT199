@@ -42,7 +42,8 @@ public class SettingActivity extends AppCompatActivity {
                     fm.popBackStack();
                     activitySettingBinding.profile.setVisibility(View.VISIBLE);
                     activitySettingBinding.logout.setVisibility(View.VISIBLE);
-                }else {
+                }
+                else {
                     Intent i = new Intent(SettingActivity.this, MainActivity.class);
                     startActivity(i);
                 }

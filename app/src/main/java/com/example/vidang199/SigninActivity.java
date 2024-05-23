@@ -38,8 +38,6 @@ public class SigninActivity extends AppCompatActivity {
         }
         setContentView(activitySigninBinding.getRoot());
 
-//        sharedPreferences = getSharedPreferences("SavedToken",MODE_PRIVATE);
-
         myAuth = FirebaseAuth.getInstance();
         firebaseDatabase = FirebaseDatabase.getInstance();
 
@@ -51,8 +49,8 @@ public class SigninActivity extends AppCompatActivity {
 
                 if(activitySigninBinding.signinPassword.getTransformationMethod()!=null)
                      activitySigninBinding.signinPassword.setTransformationMethod(null);
-                else activitySigninBinding.signinPassword.setTransformationMethod(new PasswordTransformationMethod());
-
+                else
+                    activitySigninBinding.signinPassword.setTransformationMethod(new PasswordTransformationMethod());
             }
         });
 
@@ -77,15 +75,10 @@ public class SigninActivity extends AppCompatActivity {
 
                                         String id =  task.getResult().getUser().getUid();
 
-                                        // khoi tao doi tuong de luu token
                                         sharedPreferences = getSharedPreferences("SavedToken",MODE_PRIVATE);
-
-                                        // lay token da~ luu tu` sharedPreferences
                                         String tokenInMain =  sharedPreferences.getString("ntoken","mynull");
 
-                                        // luu token vao csdl firebase danh` cho nguoi dung da~ dang nhap
                                         firebaseDatabase.getReference("Users").child(id).child("token").setValue(tokenInMain);
-
 
                                         Intent intent = new Intent(SigninActivity.this, MainActivity.class);
                                         startActivity(intent);

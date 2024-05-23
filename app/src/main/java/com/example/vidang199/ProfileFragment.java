@@ -81,7 +81,6 @@ public class ProfileFragment extends Fragment {
                         firebaseDatabase.getReference("Users").child(firebaseAuth.getUid()).child("userName").setValue(ss).addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void unused) {
-
                                 Toast.makeText(getContext(), "Tên đã được sửa! ", Toast.LENGTH_SHORT).show();
                                 binding.edittext.setText("");
                                 binding.editFragContainer.setVisibility(View.GONE);

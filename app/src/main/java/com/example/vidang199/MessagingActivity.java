@@ -98,15 +98,8 @@ public class MessagingActivity extends AppCompatActivity {
 
                     String msg = e.child("msgText").getValue().toString();
 
-                    String decrypted = "";
-                    try {
-                        decrypted = AESUtils.decrypt(msg);
-                    } catch (Exception er) {
-                        er.printStackTrace();
-                    }
-
                     msgData.add(new MessageModel(e.child("uId").getValue().toString()
-                            ,decrypted
+                            ,msg
                             ,(Long) Long.valueOf(e.child("msgTime").getValue().toString())));
 
                 }
@@ -118,10 +111,9 @@ public class MessagingActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                // Failed to read value
+
             }
         });
-
 
 
 //        FirebaseMessaging.getInstance().subscribeToTopic("all");
@@ -132,18 +124,11 @@ public class MessagingActivity extends AppCompatActivity {
             public void onClick(View v) {
 
                 String msg = activityMessagingBinding.typingSpace.getText().toString().trim();
-              
-                String encryptedMsg = msg;
-                try {
-                    encryptedMsg = AESUtils.encrypt(msg);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
 
                 long date = new Date().getTime();
 
                 activityMessagingBinding.typingSpace.setText("");
-                final MessageModel messageModel = new MessageModel(senderId, encryptedMsg, date);
+                final MessageModel messageModel = new MessageModel(senderId, msg, date);
 
                 if(!msg.isEmpty()) {
                     firebaseDatabase.getReference("Users").child(senderId).child("Contacts")
@@ -153,10 +138,6 @@ public class MessagingActivity extends AppCompatActivity {
                         public void onSuccess(Void unused) {
 
                             activityMessagingBinding.msgRecyclerview.scrollToPosition(msgAdapter.getItemCount()-1);
-
-                            FcmNotificationsSender fcmNotificationsSender = new FcmNotificationsSender(receiverToken,senderName
-                                    ,msg,getApplicationContext(),MessagingActivity.this);
-                            fcmNotificationsSender.SendNotifications();
 
                             firebaseDatabase.getReference("Users").child(receiverId).child("Contacts").child(senderId)
                                     .child("interactionTime").setValue(date);
@@ -175,24 +156,18 @@ public class MessagingActivity extends AppCompatActivity {
                             firebaseDatabase.getReference("Users").child(receiverId).child("Contacts").child(senderId)
                                     .child("recentMessage").setValue(msg);
 
-
                         }
                     });
                 }
-
 
             }
         });
 
 
-
         activityMessagingBinding.msgRecyclerview.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
             @Override
-
-            public void onLayoutChange(View v, int left, int top, int right,int bottom, int oldLeft, int oldTop,int oldRight, int oldBottom)
-            {
-
-                if ( bottom < oldBottom) {
+            public void onLayoutChange(View v, int left, int top, int right,int bottom, int oldLeft, int oldTop,int oldRight, int oldBottom) {
+                if (bottom < oldBottom) {
                     activityMessagingBinding.msgRecyclerview.postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -201,13 +176,9 @@ public class MessagingActivity extends AppCompatActivity {
                         }
                     }, 10);
                 }
-
             }
         });
 
     }
-
-
-
 
 }
